@@ -130,5 +130,24 @@ document.addEventListener('DOMContentLoaded', async () => {
   } catch (err) {
     logEvent('app:info error: ' + err.message);
   }
+
+  // DB Health
+  try {
+    const dbRes = await window.api.invoke('db:health');
+    if (dbRes.ok && dbRes.data?.ok) {
+      const h = dbRes.data;
+      const appInfoDl = document.getElementById('app-info');
+      appendDl(appInfoDl, 'إصدار الـ Schema', `${h.schemaVersion} (Latest: ${h.latestVersion})`, true);
+      appendDl(appInfoDl, 'وضع الـ Journal', h.journalMode, true);
+      appendDl(appInfoDl, 'الـ Foreign Keys', h.foreignKeys ? '✅ ON' : '❌ OFF', true);
+      appendDl(appInfoDl, 'سلامة البيانات', h.integrity === 'ok' ? '✅ OK' : '❌ ' + h.integrity);
+      appendDl(appInfoDl, 'حالة الـ Seed', h.seeded ? '✅ نعم' : '❌ لا');
+      logEvent('db:health received: ' + JSON.stringify(h));
+    } else {
+      logEvent('db:health failed: ' + (dbRes.data?.error || dbRes.message));
+    }
+  } catch (err) {
+    logEvent('db:health error: ' + err.message);
+  }
 });
 

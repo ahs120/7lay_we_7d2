@@ -125,8 +125,10 @@ frame-ancestors 'none'
 | `npm start` / installer | `%APPDATA%\MohamedFawzyPOS\` |
 
 ### 3.8 SQL
-**ممنوع خارج `src/main/db/repositories/`** — حتى في الاختبارات والسكريبتات الداخلية.  
-`scripts/check-sqlite.cjs` استثناء واحد (خارج src) ومسموح به.
+**ممنوع خارج `src/main/db/repositories/`** — مع استثناءين محددين وموثقين:
+1. ملفات `src/main/db/migrations/*.sql` والـ runner المسؤول عن تنفيذها (`src/main/db/migrate.js`).
+2. استدعاءات `PRAGMA` الضرورية لضبط الاتصال في `src/main/db/connection.js`.
+أي استعلام أو أمر SQL آخر محظور تمامًا خارج طبقة الـ repositories.
 
 ### 3.9 الأرقام المالية
 - كل القيم بـ **piasters** (integers) — مثال: 1500 = 15.00 ج.م
@@ -135,8 +137,9 @@ frame-ancestors 'none'
 - المنطق في `src/shared/pricing.js`
 
 ### 3.10 التواريخ
-- مخزّنة كـ **ISO UTC strings** في SQLite
-- عرضها بتوقيت `Africa/Cairo` في الـ UI
+- كل التواريخ واللقطات الزمنية مخزّنة كـ **ISO UTC strings** بصيغة ISO 8601 (مثل `2026-11-13T04:00:00.000Z`).
+- **استثناء وحيد**: عمود `business_date` يُخزن كنص `YYYY-MM-DD` محسوب بتوقيت `Africa/Cairo` مع اعتبار ساعة بداية اليوم (`day_start_hour`، افتراضيًا 5 فجرًا)، وذلك لترقيم الطلبات اليومي والتقارير المحاسبية.
+- العرض في الـ UI بتوقيت `Africa/Cairo`.
 
 ---
 
@@ -178,7 +181,13 @@ npm run check:native   → node scripts/ensure-native.mjs --check-only
 npm run rebuild        → electron-rebuild -f -w better-sqlite3
 npm run icon           → node scripts/make-icon.mjs
 npm run dist           → (predist: icon + check:native) → electron-builder
+npm run db:reset       → تفريغ وإعادة إنشاء وقراءة migrations والـ seed (للـ dev فقط)
+npm run db:seed        → تطبيق الـ seed على الـ DB الحالية (--force لإعادة المنيو التجريبي)
+npm run db:migrate     → تشغيل الـ migrations المعلقة
+npm run test:db        → تشغيل اختبارات الـ DB داخل Electron Node mode
 ```
+
+> **ملاحظة هامة للاختبارات**: بما أن `better-sqlite3` مبني لـ ABI الخاص بـ Electron، فإن تشغيل `node --test` المباشر سيفشل في تحميل الـ native module. لذلك يتم تشغيل اختبارات الـ DB عبر `npm run test:db` (التي تستخدم `scripts/run-electron-node.mjs`) حصريًا.
 
 **في PowerShell دائمًا**:
 ```powershell
@@ -220,9 +229,9 @@ deleteAppDataOnUninstall: false
 
 ---
 
-## 10. ما تم في الجزء 1
+## 10. ما تم إنجازه
 
-### ✅ منجز
+### ✅ الجزء 1: الأساس (Foundation)
 - [x] هيكل الفولدرات + `.gitignore` + `.gitattributes` + `.editorconfig` + `.npmrc`
 - [x] `package.json` بالـ scripts الصحيحة
 - [x] تثبيت كل الاعتماديات (better-sqlite3, electron, electron-builder, …)
@@ -248,13 +257,52 @@ deleteAppDataOnUninstall: false
 - [x] `electron-builder.yml`
 - [x] `README.md`
 
-### نتائج التحقق
+### ✅ الجزء 2: قاعدة البيانات SQLite (Database & Schema)
+- [x] `src/main/db/paths.js`: مسار DB المستقل ومسارات الـ backups
+- [x] `src/main/db/connection.js`: فتح الاتصال بـ WAL, synchronous=FULL, foreign_keys=ON, busy_timeout=5000 + integrityCheck + foreignKeyCheck
+- [x] `scripts/run-electron-node.mjs`: تشغيل السكريبتات والاختبارات تحت Electron Node mode بعزل تام لـ ELECTRON_RUN_AS_NODE
+- [x] `src/main/db/migrations/001_init.sql`: الـ Schema الكاملة (32 جدول) بجميع الـ constraints والفهارس
+- [x] `src/main/db/migrate.js`: Migration runner بـ SHA-256 checksums وBEGIN IMMEDIATE وpre-migrate backup
+- [x] `src/main/db/repositories/`: طبقة الـ Repositories الكاملة (18 وحدة عبر نمط Factory):
+  - `system.repo.js`: فحص الجداول والـ PRAGMAs وفحص السلامة
+  - `settings.repo.js`: إدارة الإعدادات key-value
+  - `audit.repo.js`: سجل العمليات الحساسة
+  - `order-counters.repo.js`: ترقيم الطلبات الذري عبر RETURNING في نفس الـ transaction
+  - `users.repo.js`: إدارة المستخدمين والأدوار والـ PIN
+  - `categories.repo.js` + `items.repo.js` + `modifiers.repo.js`: المنيو والأحجام والإضافات
+  - `dining-tables.repo.js`: إدارة الصالات والترابيزات
+  - `customers.repo.js` + `delivery.repo.js`: العملاء ومناطق ورسوم التوصيل والطيارين
+  - `shifts.repo.js`: الورديات (مع قيد وردية مفتوحة واحدة فريدة)
+  - `orders.repo.js`: إنشاء وحساب الطلبات وعناصرها ولقطات الأسعار والضرائب
+  - `payments.repo.js`: المدفوعات وطرق الدفع
+  - `discounts.repo.js`: الخصومات وتطبيقها
+  - `cash-movements.repo.js`: حركات النقدية (توريد/سحب)
+  - `inventory.repo.js`: المخزون والموردين وفواتير الشراء وحركات الأصناف
+  - `expenses.repo.js`: المصروفات وتصنيفاتها
+- [x] `src/main/db/seed/`: بذور البيانات الأولية (إعدادات النظام الافتراضية + منيو تجريبي 27 صنف بـ 6 أقسام + 12 ترابيزة)
+- [x] `src/main/services/backup.js`:
+  - لقطات حية بـ `db.backup()` مع فحص سلامة الملف فور إنشائه
+  - تسمية معيارية وحفظ آخر 10 نسخ auto وحظر حذف النسخ اليدوية
+  - استعادة swap-at-boot عبر marker لتفادي إغلاق ويندوز للملفات
+- [x] `src/main/services/database.js`: إدارة دورة حياة قاعدة البيانات على الإقلاع
+- [x] `src/main/ipc/db.js` + `src/main/ipc/backup.js`: قنوات `db:health`, `backup:run`, `backup:list`, `backup:chooseDir`, `backup:restore`
+- [x] سكريبتات: `db:reset`, `db:seed`, `db:migrate`, `test:db`
+- [x] حزمة الاختبارات الكاملة (24 اختبارًا ناجحًا في `tests/db/`):
+  - `schema.test.mjs`
+  - `constraints.test.mjs`
+  - `order-counters.test.mjs`
+  - `seed.test.mjs`
+  - `backup.test.mjs`
+
+### نتائج التحقق الحالية
 | الأمر | النتيجة |
 |-------|---------|
 | `npm run check:native` | ✅ native OK |
-| `npm run selftest` | ✅ exit 0، ok:true |
-| `npm start` | ✅ نافذة تفتح |
-| `npm run dist` | ✅ installer مبني |
+| `npm run test:db` | ✅ 24 passed (0 failures) |
+| `npm run selftest` | ✅ exit 0, ok:true, DB healthy & seeded |
+| `npm run db:reset` | ✅ DB reset & seeded |
+| `npm run db:migrate` | ✅ Migrations OK |
+| `npm run dist` | ✅ NSIS installer built successfully |
 
 ---
 
