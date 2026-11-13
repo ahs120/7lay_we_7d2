@@ -150,3 +150,4 @@ npm run dist
 - **SQL**: ممنوع خارج `src/main/db/repositories/` — حتى لو كنت تختبر.
 - **innerHTML**: ممنوع في أي ملف renderer — استخدم `textContent` و`createElement`.
 - **style=""**: ممنوع في HTML (CSP تحجبه) — الكلاسات فقط.
+
