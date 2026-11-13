@@ -1,0 +1,37 @@
+appId: com.mohamedfawzy.pos
+productName: "كاشير محمد فوزي"
+copyright: "© Mohamed Fawzy Restaurant"
+
+directories:
+  output: release
+  buildResources: build
+
+asar: true
+asarUnpack:
+  - "**/*.node"
+
+files:
+  - package.json
+  - "src/**/*"
+  - "!**/*.map"
+
+npmRebuild: false
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.ico
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: "كاشير محمد فوزي"
+  deleteAppDataOnUninstall: false
+  language: "1025"
+  artifactName: "MohamedFawzyPOS-Setup-${version}.${ext}"

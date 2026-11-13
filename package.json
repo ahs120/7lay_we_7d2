@@ -1,0 +1,37 @@
+{
+  "name": "mohamed-fawzy-pos",
+  "version": "0.1.0",
+  "description": "Windows desktop POS for Mohamed Fawzy restaurant",
+  "private": true,
+  "type": "module",
+  "main": "src/main/main.js",
+  "author": "Mohamed Fawzy",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "selftest": "electron . --selftest",
+    "check:native": "node scripts/ensure-native.mjs --check-only",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "icon": "node scripts/make-icon.mjs",
+    "predist": "npm run icon && npm run check:native",
+    "dist": "electron-builder --win nsis --x64",
+    "postinstall": "node scripts/ensure-native.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "3.0.3",
+    "better-sqlite3": "13.1.1",
+    "electron-log": "5.4.4",
+    "exceljs": "4.4.0"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "4.2.1",
+    "@fontsource/aref-ruqaa": "5.3.0",
+    "@fontsource/cairo": "5.3.0",
+    "chart.js": "4.6.1",
+    "electron": "45.3.1",
+    "electron-builder": "26.18.0",
+    "jsbarcode": "3.12.3",
+    "lucide-static": "1.72.0",
+    "png2icons": "2.0.1"
+  }
+}
