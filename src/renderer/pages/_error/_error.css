@@ -1,0 +1,21 @@
+/* pages/_error/_error.css
+ * Generic error page styling.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.page-error-container {
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-block-size: 20rem;
+}
+
+.error-box {
+  background-color: var(--surface);
+  border: 1px solid var(--danger-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-inline-size: 32rem;
+  inline-size: 100%;
+}

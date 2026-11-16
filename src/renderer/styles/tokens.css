@@ -1,0 +1,189 @@
+/* styles/tokens.css — Design System Tokens
+ * Single source of truth for all design values.
+ * Colors ONLY defined here — never in other CSS files.
+ * No external URLs.
+ */
+
+:root {
+  /* ── Contract Colors (11 — never change) ─────────────────────────── */
+  --bg:           #F2E3CA;
+  --surface:      #FBF5E6;
+  --surface-2:    #E6D5BB;
+  --primary:      #A4522F;
+  --primary-dark: #7A3B2A;
+  --text:         #4B2C1E;
+  --text-muted:   #8A6A55;
+  --gold:         #B8955E;
+  --accent:       #E8742C;
+  --success:      #6B7A3A;
+  --danger:       #B3261E;
+
+  /* ── Derived Surface Colors ──────────────────────────────────────── */
+  --surface-3:    color-mix(in srgb, var(--surface-2) 60%, var(--bg) 40%);
+  --surface-hover: color-mix(in srgb, var(--surface-2) 80%, var(--primary) 20%);
+  --surface-active: color-mix(in srgb, var(--surface-2) 60%, var(--primary) 40%);
+  --border:       color-mix(in srgb, var(--surface-2) 70%, var(--text) 30%);
+  --border-light: color-mix(in srgb, var(--surface-2) 85%, var(--text) 15%);
+  --border-focus: var(--primary);
+
+  /* ── Primary Variants ────────────────────────────────────────────── */
+  --primary-light:   color-mix(in srgb, var(--primary) 15%, var(--surface) 85%);
+  --primary-muted:   color-mix(in srgb, var(--primary) 50%, var(--surface) 50%);
+  --accent-light:    color-mix(in srgb, var(--accent) 15%, var(--surface) 85%);
+  --success-light:   color-mix(in srgb, var(--success) 15%, var(--surface) 85%);
+  --danger-light:    color-mix(in srgb, var(--danger) 15%, var(--surface) 85%);
+
+  /* ── Text Colors ─────────────────────────────────────────────────── */
+  --text-on-primary: #FBF5E6;
+  --text-on-dark:    #FBF5E6;
+  --text-inverse:    var(--surface);
+  --text-link:       var(--primary);
+  --text-disabled:   color-mix(in srgb, var(--text-muted) 60%, transparent 40%);
+
+  /* ── Overlay ─────────────────────────────────────────────────────── */
+  --overlay-bg:   color-mix(in srgb, var(--text) 50%, transparent 50%);
+  --scrim:        color-mix(in srgb, var(--text) 60%, transparent 40%);
+
+  /* ── Typography ──────────────────────────────────────────────────── */
+  --font-ui:      'Cairo', system-ui, sans-serif;
+  --font-display: 'Aref Ruqaa', 'Cairo', serif;
+  --font-mono:    'Consolas', 'Courier New', monospace;
+
+  /* Type scale — fluid between 14-16px base */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.875rem;   /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.125rem;   /* 18px */
+  --text-xl:   1.25rem;    /* 20px */
+  --text-2xl:  1.5rem;     /* 24px */
+  --text-3xl:  1.875rem;   /* 30px */
+  --text-4xl:  2.25rem;    /* 36px */
+
+  /* Line heights */
+  --leading-tight:  1.25;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  /* Font weights */
+  --weight-normal:    400;
+  --weight-semibold:  600;
+  --weight-bold:      700;
+
+  /* ── Spacing ─────────────────────────────────────────────────────── */
+  --space-0:   0;
+  --space-1:   0.25rem;   /* 4px */
+  --space-2:   0.5rem;    /* 8px */
+  --space-3:   0.75rem;   /* 12px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-8:   2rem;      /* 32px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-12:  3rem;      /* 48px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+
+  /* ── Border Radius ───────────────────────────────────────────────── */
+  --radius-sm:   0.25rem;   /* 4px */
+  --radius-md:   0.5rem;    /* 8px */
+  --radius-lg:   0.75rem;   /* 12px */
+  --radius-xl:   1rem;      /* 16px */
+  --radius-2xl:  1.5rem;    /* 24px */
+  --radius-full: 9999px;
+
+  /* ── Tap / Hit Sizes ─────────────────────────────────────────────── */
+  --tap-min:   3rem;      /* 48px — minimum interactive target */
+  --tap-sm:    2.5rem;    /* 40px — compact contexts only */
+  --tap-lg:    3.5rem;    /* 56px — primary actions */
+  --tap-xl:    4rem;      /* 64px — numpad keys */
+
+  /* ── Shadows ─────────────────────────────────────────────────────── */
+  --shadow-sm:  0 1px 2px color-mix(in srgb, var(--text) 10%, transparent 90%);
+  --shadow-md:  0 2px 8px color-mix(in srgb, var(--text) 12%, transparent 88%);
+  --shadow-lg:  0 4px 16px color-mix(in srgb, var(--text) 15%, transparent 85%);
+  --shadow-xl:  0 8px 32px color-mix(in srgb, var(--text) 18%, transparent 82%);
+  --shadow-inner: inset 0 1px 3px color-mix(in srgb, var(--text) 10%, transparent 90%);
+
+  /* ── Layout ──────────────────────────────────────────────────────── */
+  --sidebar-w:          15rem;    /* 240px expanded */
+  --sidebar-w-compact:  4.5rem;   /* 72px compact */
+  --topbar-h:           3.5rem;   /* 56px */
+  --statusbar-h:        1.75rem;  /* 28px */
+  --content-max-w:      90rem;    /* max content width */
+
+  /* ── Z-index layers ──────────────────────────────────────────────── */
+  --z-below:       -1;
+  --z-base:         0;
+  --z-raised:      10;
+  --z-sticky:      20;
+  --z-topbar:      30;
+  --z-sidebar:     40;
+  --z-dropdown:    50;
+  --z-overlay:     60;
+  --z-modal:       70;
+  --z-toast:       80;
+  --z-tooltip:     90;
+  --z-splash:     100;
+
+  /* ── Motion ──────────────────────────────────────────────────────── */
+  --duration-instant:  50ms;
+  --duration-fast:    150ms;
+  --duration-normal:  250ms;
+  --duration-slow:    400ms;
+  --duration-splash:  600ms;
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0.0, 1, 1);
+  --ease-inout:  cubic-bezier(0.4, 0.0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ── Focus ring ──────────────────────────────────────────────────── */
+  --focus-ring:        0 0 0 2px var(--surface), 0 0 0 4px var(--primary);
+  --focus-ring-danger: 0 0 0 2px var(--surface), 0 0 0 4px var(--danger);
+
+  /* ── Component-level tokens ──────────────────────────────────────── */
+  --input-h:        var(--tap-min);
+  --input-radius:   var(--radius-md);
+  --input-border:   var(--border);
+  --input-bg:       var(--surface);
+  --input-text:     var(--text);
+  --input-ph:       var(--text-muted);
+
+  --btn-radius:     var(--radius-md);
+  --btn-h:          var(--tap-min);
+
+  --card-radius:    var(--radius-lg);
+  --card-bg:        var(--surface);
+  --card-border:    var(--border-light);
+
+  --badge-radius:   var(--radius-full);
+  --toast-radius:   var(--radius-lg);
+  --modal-radius:   var(--radius-xl);
+  --overlay-radius: var(--radius-lg);
+
+  --table-row-h:    var(--tap-min);
+  --table-head-h:   2.75rem;
+
+  --tab-h:          var(--tap-min);
+  --tab-border-w:   3px;
+
+  --sidebar-item-h: var(--tap-min);
+  --sidebar-icon-s: 1.5rem;
+
+  --icon-sm:  1rem;
+  --icon-md:  1.5rem;
+  --icon-lg:  2rem;
+  --icon-xl:  2.5rem;
+}
+
+/* ── Reduced motion overrides ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast:   0ms;
+    --duration-normal: 0ms;
+    --duration-slow:   0ms;
+    --duration-splash: 0ms;
+    --ease-spring:     linear;
+  }
+}

@@ -4,35 +4,55 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>كاشير محمد فوزي — تشخيص</title>
+  <title>كاشير محمد فوزي</title>
+
+  <!-- Design System Stylesheets -->
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/components.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/splash.css">
+
+  <!-- Page Stylesheets -->
+  <link rel="stylesheet" href="/pages/home/home.css">
+  <link rel="stylesheet" href="/pages/_placeholder/_placeholder.css">
+  <link rel="stylesheet" href="/pages/_error/_error.css">
+  <link rel="stylesheet" href="/pages/not-found/not-found.css">
+  <link rel="stylesheet" href="/pages/forbidden/forbidden.css">
+  <link rel="stylesheet" href="/pages/styleguide/styleguide.css">
 </head>
 <body>
-  <h1>كاشير محمد فوزي</h1>
-  <p>صفحة تشخيص مؤقتة — ستُستبدل بالواجهة الكاملة في جزء الـ UI.</p>
+  <!-- Splash Screen -->
+  <div id="splash" role="alert" aria-busy="true">
+    <div class="splash__logo-wrap">
+      <img src="/assets/logo.png" alt="كاشير محمد فوزي" class="splash__logo" id="splash-logo">
+      <div class="splash__logo--monogram" id="splash-monogram" hidden>ك</div>
+      <h1 class="splash__title">كاشير محمد فوزي</h1>
+      <p class="splash__subtitle">نظام نقاط البيع وإدارة المطاعم</p>
+    </div>
 
-  <section>
-    <h2>حالة الاتصال</h2>
-    <dl id="info-list">
-      <dt>الحالة</dt>
-      <dd id="status">جاري التحميل...</dd>
-    </dl>
-  </section>
+    <div class="splash__progress-wrap">
+      <div class="splash__progress-bar"></div>
+    </div>
 
-  <section>
-    <h2>فحص ذاتي</h2>
-    <dl id="checks-list"></dl>
-  </section>
+    <div class="splash__message" aria-live="polite">جاري التحميل...</div>
 
-  <section>
-    <h2>معلومات التطبيق</h2>
-    <dl id="app-info"></dl>
-  </section>
+    <div class="splash__error-box">
+      <div class="splash__error-title">تعذّر تشغيل التطبيق</div>
+      <div class="splash__error-msg"></div>
+      <button type="button" class="btn btn--danger btn--sm splash__retry-btn">إعادة المحاولة</button>
+    </div>
 
-  <section>
-    <h2>سجل أحداث</h2>
-    <pre id="event-log" dir="ltr"></pre>
-  </section>
+    <div class="splash__version">v0.1.0</div>
+  </div>
 
-  <script type="module" src="./boot.js"></script>
+  <!-- SPA Shell Mount Point -->
+  <div id="app-root"></div>
+
+  <!-- Floating Overlays Root (Modals, Dropdowns, Toasts) -->
+  <div id="overlay-root"></div>
+
+  <script type="module" src="/app.js"></script>
 </body>
 </html>

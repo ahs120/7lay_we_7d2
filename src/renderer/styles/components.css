@@ -1,0 +1,10 @@
+/* styles/components.css — component style imports only */
+@import './components/button.css';
+@import './components/form.css';
+@import './components/numpad.css';
+@import './components/overlay.css';
+@import './components/toast.css';
+@import './components/feedback.css';
+@import './components/table.css';
+@import './components/tabs.css';
+@import './components/misc.css';

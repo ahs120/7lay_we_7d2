@@ -294,15 +294,55 @@ deleteAppDataOnUninstall: false
   - `seed.test.mjs`
   - `backup.test.mjs`
 
+### ✅ الجزء 3: نظام التصميم وهيكل التطبيق (Design System & App Shell)
+- [x] خطوط محلية 100% (@fontsource/cairo و@fontsource/aref-ruqaa) مخدومة عبر `app://local/assets/fonts/` بدون أي طلب خارجي
+- [x] حزمة الأيقونات (103 أيقونات SVG من lucide-static مولدة في `icons.js` وتُنشأ عبر `createElementNS` بدون أي innerHTML)
+- [x] نمط الزخرفة الإسلامية `islamic-tile.svg` بنجمة ثمانية ولون الذهب
+- [x] نظام المتغيرات `tokens.css` بألوان العقد الـ 11 والرموز المشتقة والمقاييس والظلال
+- [x] الأساس `base.css` الداعم لـ RTL بالكامل وجميع الخصائص logical
+- [x] أدوات DOM الآمنة: `dom.js` (دالة `h` مع حظر `innerHTML` و`style` و`onclick`)، `scope.js`، `focus.js`، `overlay.js`، `store.js`
+- [x] نظام التعريب والتنسيق: `ar.js` الشامل، `t.js`، `format.js` (أرقام صحيحة بالقروش، تقريب، توقيت القاهرة)، ومكونات `money.js`
+- [x] نظام اختصارات لوحة المفاتيح `shortcuts.js` المستقل عن لغة الكيبورد والمراعي للمفاتيح المحجوزة
+- [x] مكتبة المكونات التفاعلية بمساحة لمس ≥ 48px:
+  - `button.js`: كافة المتغيرات والحالات والأيقونات والتحميل
+  - `input.js`: الحقول النصية والتسميات والأخطاء والبادئات واللواحق
+  - `select.js`: قائمة منسدلة مخصصة معروضة في `#overlay-root`
+  - `numpad.js` و`numpad.logic.js`: لوحة أرقام لمسية كبيرة بمفاتيح ≥ 64px
+  - `modal.js`: نوافذ منبثقة مع عزل التمرير وحبس التركيز وسياق الاختصارات
+  - `confirm.js`: حوارات تأكيد وحذف مبنية على Promises
+  - `toast.js`: إشعارات عائمة بحد أقصى 3 وإيقاف مؤقت عند التمرير
+  - `loading.js`: Spinner وBusy overlay بمؤقت مانع للوميض وSkeleton shimmer
+  - `empty-state.js`: بطاقات الحالات الفارغة
+  - `table.js` و`table.logic.js`: جداول بيانات برأس ثابت وترتيب وتقسيم صفحات
+  - `tabs.js`: تبويبات متوافقة مع WAI-ARIA ودعم كامل لأسهم RTL
+  - `badge.js` و`card.js`
+- [x] راوتر الـ SPA المستند على Hash: `router.js` و`router.logic.js` مع حظر السباق (race condition) وفحص الصلاحيات و`canLeave`
+- [x] جدول المسارات الكامل `routes.js` وصلاحياتها المرتبطة بـ `src/shared/permissions.js`
+- [x] مخازن الحالة: `session.js` و`status.js` (تتبع الوردية والطابعة)
+- [x] شاشة الإقلاع والـ Shell: `shell.js`، `sidebar.js`، `topbar.js` بساعة القاهرة وعداد الوردية
+- [x] استبدال صفحة التشخيص المؤقتة بـ `index.html` الجديدة و`app.js`، وحذف `boot.js`
+- [x] صفحات: `home` (لوحة تحكم وتشخيص)، `_placeholder`، `_error`، `not-found`، `forbidden`
+- [x] صفحة دليل التصميم `styleguide` بـ 14 قسماً تفاعلياً ولوحة فحص ذاتي آلية
+- [x] سكريبت الفحص `audit-renderer.mjs` وقواعد الفحص الـ 14 و0 أخطاء
+- [x] حزمة اختبارات الـ UI (27 اختباراً ناجحاً في `tests/renderer/`):
+  - `format.test.mjs`
+  - `api.test.mjs`
+  - `shortcuts.test.mjs`
+  - `numpad.test.mjs`
+  - `table.test.mjs`
+  - `router.test.mjs`
+
 ### نتائج التحقق الحالية
 | الأمر | النتيجة |
 |-------|---------|
 | `npm run check:native` | ✅ native OK |
 | `npm run test:db` | ✅ 24 passed (0 failures) |
+| `npm run test:ui` | ✅ 27 passed (0 failures) |
+| `npm run audit:ui` | ✅ Audit PASSED (0 errors) |
+| `npm run check:ui` | ✅ All UI audits and tests passed |
 | `npm run selftest` | ✅ exit 0, ok:true, DB healthy & seeded |
 | `npm run db:reset` | ✅ DB reset & seeded |
 | `npm run db:migrate` | ✅ Migrations OK |
-| `npm run dist` | ✅ NSIS installer built successfully |
 
 ---
 
@@ -310,16 +350,13 @@ deleteAppDataOnUninstall: false
 
 | الجزء | المحتوى |
 |-------|---------|
-| 2 | DB schema + migrations + repositories |
-| 3 | تسجيل الدخول + المستخدمين + الإعدادات |
-| 4 | المنيو |
-| 5 | شاشة الكاشير والأوردرات |
-| 6 | الدفع والورديات |
-| 7 | المطبخ والترابيزات والدليفري |
-| 8 | الطباعة |
-| 9 | المخزون والمشتريات والمصروفات |
-| 10 | التقارير والباك أب |
-| UI | نظام التصميم + الراوتر + الشاشة الرئيسية (بعد الجزء 3) |
+| 4 | تسجيل الدخول + المستخدمين + الصلاحيات + الإعدادات |
+| 5 | المنيو وإدارة الأصناف والأقسام والمعدلات |
+| 6 | شاشة الكاشير وإدارة الطلبات والخصومات |
+| 7 | الدفع وحركات النقدية والورديات |
+| 8 | شاشة المطبخ وإدارة الترابيزات والتوصيل (الدليفري) |
+| 9 | الطباعة وقوالب الفواتير والباركود |
+| 10 | المخزون والمشتريات والمصروفات والتقارير والنسخ الاحتياطي |
 
 ---
 
@@ -336,3 +373,17 @@ Shell:            PowerShell 5 (استخدم npm.cmd لا npm)
 
 **مشكلة ELECTRON_RUN_AS_NODE**: بيئة Antigravity IDE تضبط هذا المتغير تلقائيًا.  
 الحل: `$env:ELECTRON_RUN_AS_NODE="";` قبل أي أمر يستدعي Electron مباشرةً.
+
+
+---
+
+## 13. قواعد الواجهة ونظام التصميم (UI Rules)
+
+1. **حظر كامل لـ innerHTML**: غير مسموح بـ `innerHTML` أو `outerHTML` أو `insertAdjacentHTML` في أي مكان في `src/renderer/`، باستثناء استخدام `DOMParser` المعتمد داخل الراوتر لقراءة القوالب الثابتة المحلية.
+2. **العزل عن الستايل الداخلي**: ممنوع استخدام سمة `style=""` داخل عناصر HTML، وتعديل المتغيرات يتم حصرًا عبر `element.style.setProperty('--var', value)`.
+3. **ألوان العقد الـ 11**: جميع الألوان تُعرَّف حصرًا داخل `src/renderer/styles/tokens.css` ويحظر كتابة قيم Hex أو RGB في أي ملف CSS آخر.
+4. **دعم RTL وخصائص Logical**: استخدام الخصائص المنطقية (`padding-inline`, `margin-block`, `inset-inline-start`, ...) بشكل كامل، وحظر `left`/`right`/`margin-left`/`margin-right` إلا بتعليق استثنائي موثق `/* allow-physical */`.
+5. **اللغة العربية في مكانها المحدد**: جميع النصوص العربية تتركز في `src/renderer/i18n/ar.js` (أو بيانات العرض في `sample-data.js`)، والكود والتعليقات والرسائل البرمجية بالإنجليزية.
+6. **أهداف اللمس**: جميع العناصر التفاعلية (أزرار، حقول، مدخلات، خيارات) يجب ألا يقل ارتفاعها/مساحتها عن 48 بكسل (`--tap-min`) لضمان سهولة الاستخدام على شاشات اللمس.
+7. **الحسابات المالية**: المعاملات المالية صحيحة دائمًا بالقروش (integers) وبدون استخدام Float Arithmetic.
+8. **استقلالية الاختصارات**: اختصارات لوحة المفاتيح تعتمد على `event.code` للحروف والأرقام لتعمل بشكل متطابق سواء كانت لغة الإدخال عربية أو إنجليزية.

@@ -1,0 +1,138 @@
+/* styles/components/overlay.css
+ * Modal backdrop, dialog layout, sizes, confirm dialog.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0; /* allow-physical */
+  background-color: var(--overlay-bg);
+  backdrop-filter: blur(2px);
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: modal-fade-in var(--duration-fast) var(--ease-out);
+}
+
+.modal-dialog {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--modal-radius);
+  box-shadow: var(--shadow-xl);
+  display: flex;
+  flex-direction: column;
+  max-block-size: calc(100vh - var(--space-8));
+  inline-size: 100%;
+  animation: modal-pop-in var(--duration-fast) var(--ease-spring);
+  overflow: hidden;
+}
+
+/* ── Sizes ───────────────────────────────────────────────────────────── */
+.modal-dialog--sm {
+  max-inline-size: 26rem;
+}
+
+.modal-dialog--md {
+  max-inline-size: 38rem;
+}
+
+.modal-dialog--lg {
+  max-inline-size: 54rem;
+}
+
+.modal-dialog--full {
+  max-inline-size: calc(100vw - var(--space-8));
+  block-size: calc(100vh - var(--space-8));
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-4);
+  padding-inline: var(--space-5);
+  border-block-end: 1px solid var(--border-light);
+  gap: var(--space-3);
+}
+
+.modal-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+  margin: 0;
+}
+
+.modal-close-btn {
+  color: var(--text-muted);
+}
+
+@media (hover: hover) {
+  .modal-close-btn:hover {
+    color: var(--text);
+  }
+}
+
+/* ── Body ────────────────────────────────────────────────────────────── */
+.modal-body {
+  padding-block: var(--space-5);
+  padding-inline: var(--space-5);
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────── */
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-5);
+  border-block-start: 1px solid var(--border-light);
+  background-color: var(--surface-2);
+}
+
+/* ── Confirm dialog specifics ────────────────────────────────────────── */
+.confirm-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+
+.confirm-icon {
+  color: var(--primary);
+}
+
+.confirm-icon--danger {
+  color: var(--danger);
+}
+
+.confirm-message {
+  font-size: var(--text-base);
+  color: var(--text);
+  line-height: var(--leading-relaxed);
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────────── */
+@keyframes modal-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modal-pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

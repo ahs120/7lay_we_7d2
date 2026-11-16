@@ -1,0 +1,21 @@
+/* pages/_placeholder/_placeholder.css
+ * Styling for placeholder page.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.page-placeholder {
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-block-size: 20rem;
+}
+
+.placeholder-box {
+  background-color: var(--surface);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-inline-size: 32rem;
+  inline-size: 100%;
+}

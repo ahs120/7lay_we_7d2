@@ -1,0 +1,280 @@
+/* styles/base.css — Reset, RTL, body, global utilities
+ * No colors defined here — use tokens.css variables.
+ * Logical CSS properties only (no margin-left/right/padding-left/right/left/right).
+ * Hover styles only inside @media (hover:hover).
+ */
+
+/* ── Box model reset ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Root + RTL ──────────────────────────────────────────────────────── */
+html {
+  direction: rtl;
+  font-size: 16px;
+  line-height: var(--leading-normal);
+  text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow: hidden; /* Electron — no OS scrollbar on root */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Body ────────────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-ui);
+  font-size: var(--text-base);
+  font-weight: var(--weight-normal);
+  color: var(--text);
+  background-color: var(--bg);
+  height: 100%;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Prevent text selection during rapid UI interactions */
+  user-select: none;
+}
+
+/* Allow selection in input/textarea/contenteditable */
+input,
+textarea,
+[contenteditable] {
+  user-select: auto;
+}
+
+/* ── Typography base ─────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-tight);
+  color: var(--text);
+}
+
+p {
+  line-height: var(--leading-relaxed);
+}
+
+a {
+  color: var(--text-link);
+  text-decoration: none;
+}
+
+@media (hover:hover) {
+  a:hover {
+    text-decoration: underline;
+  }
+}
+
+/* ── Focus styles — global ───────────────────────────────────────────── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+/* Remove focus ring for mouse clicks */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ── Images / Media ──────────────────────────────────────────────────── */
+img,
+svg,
+video {
+  display: block;
+  max-inline-size: 100%;
+}
+
+/* ── Form elements reset ─────────────────────────────────────────────── */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+/* ── Lists ───────────────────────────────────────────────────────────── */
+ul,
+ol {
+  list-style: none;
+}
+
+/* ── Table reset ─────────────────────────────────────────────────────── */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  inline-size: 6px;
+  block-size: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: var(--radius-full);
+}
+
+@media (hover:hover) {
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+/* ── Selection ───────────────────────────────────────────────────────── */
+::selection {
+  background: color-mix(in srgb, var(--primary) 25%, transparent 75%);
+  color: var(--text);
+}
+
+/* ── Utilities ───────────────────────────────────────────────────────── */
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Force LTR for numbers/paths/codes (wrap in .ltr) */
+.ltr {
+  direction: ltr; /* allow-physical */
+  unicode-bidi: embed;
+  text-align: start;
+}
+
+/* Numeric digits — tabular, ltr */
+.num {
+  direction: ltr; /* allow-physical */
+  unicode-bidi: embed;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* Text truncation with ellipsis */
+.truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Vertical stack (flex column) */
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Horizontal row */
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/* Flex grow */
+.grow {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+}
+
+/* Icon wrapper — ensures consistent sizing */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Flip icon in RTL (for directional icons like arrows) */
+.icon--flip-rtl {
+  transform: scaleX(-1); /* allow-physical */
+}
+
+/* ── Hover-only interactive states ───────────────────────────────────── */
+@media (hover:hover) {
+  .hover\:opacity-80:hover {
+    opacity: 0.8;
+  }
+
+  .hover\:bg-surface-hover:hover {
+    background-color: var(--surface-hover);
+  }
+}
+
+/* ── Touch action on interactive elements ────────────────────────────── */
+[role="button"],
+[role="tab"],
+[role="menuitem"],
+[role="option"],
+[role="checkbox"],
+[role="radio"],
+[role="switch"],
+[role="listitem"][tabindex],
+button,
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  touch-action: manipulation;
+}
+
+/* ── Overlay root ────────────────────────────────────────────────────── */
+#overlay-root {
+  position: fixed;
+  inset: 0; /* allow-physical: inset shorthand OK per spec */
+  pointer-events: none;
+  z-index: var(--z-overlay);
+  isolation: isolate;
+}
+
+#overlay-root > * {
+  pointer-events: auto;
+}
+
+/* ── Transition base ─────────────────────────────────────────────────── */
+.transition-fast {
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.transition-normal {
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+/* ── Hidden ──────────────────────────────────────────────────────────── */
+[hidden] {
+  display: none !important;
+}
+
+.visually-hidden {
+  visibility: hidden;
+  pointer-events: none;
+}

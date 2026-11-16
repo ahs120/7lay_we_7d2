@@ -1,0 +1,120 @@
+/* pages/home/home.css
+ * Home dashboard styling.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.page-home {
+  gap: var(--space-6);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-w);
+}
+
+.home-welcome {
+  padding-block: var(--space-2);
+}
+
+.home-welcome__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  color: var(--primary);
+  margin-block-end: var(--space-1);
+}
+
+.home-welcome__subtitle {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+}
+
+.home-section {
+  gap: var(--space-3);
+}
+
+.home-section__title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+  border-block-end: 2px solid var(--border-light);
+  padding-block-end: var(--space-2);
+}
+
+/* ── Shortcut Tiles Grid ─────────────────────────────────────────────── */
+.home-shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: var(--space-4);
+}
+
+.home-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  text-align: start;
+  cursor: pointer;
+  touch-action: manipulation;
+  min-block-size: 7.5rem;
+  transition: transform var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .home-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+  }
+}
+
+.home-tile:active {
+  transform: scale(0.98);
+}
+
+.home-tile__icon {
+  color: var(--primary);
+}
+
+.home-tile__title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+}
+
+.home-tile__desc {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-snug);
+}
+
+/* ── Diagnostic Cards Grid ───────────────────────────────────────────── */
+.home-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: var(--space-4);
+}
+
+.home-diag-list {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: var(--space-2);
+  column-gap: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.home-diag-list dt {
+  color: var(--text-muted);
+  font-weight: var(--weight-semibold);
+}
+
+.home-diag-list dd {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+  margin: 0;
+  text-align: end;
+}

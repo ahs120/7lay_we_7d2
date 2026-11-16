@@ -1,0 +1,180 @@
+/* styles/components/form.css
+ * Form controls: input, select, labels, errors.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-inline-size: 0;
+}
+
+.form-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.form-label__required {
+  color: var(--danger);
+}
+
+.form-control {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--input-h); /* 48px */
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
+  padding-inline: var(--space-3);
+  gap: var(--space-2);
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.form-control:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: var(--focus-ring);
+}
+
+.form-input {
+  flex: 1 1 0%;
+  min-inline-size: 0;
+  block-size: 100%;
+  min-block-size: var(--input-h); /* 48px */
+  color: var(--input-text);
+  background-color: transparent;
+  border: none;
+  font-size: var(--text-base);
+  font-family: var(--font-ui);
+}
+
+.form-input::placeholder {
+  color: var(--input-ph);
+}
+
+.form-control__icon {
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.form-control__affix {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+  user-select: none;
+}
+
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--danger);
+  min-block-size: 1.25rem;
+}
+
+.form-error__icon {
+  color: var(--danger);
+}
+
+.form-field--error .form-control {
+  border-color: var(--danger);
+}
+
+.form-field--error .form-control:focus-within {
+  box-shadow: var(--focus-ring-danger);
+}
+
+.form-field--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ── Select Trigger & Menu ───────────────────────────────────────────── */
+.form-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--input-h); /* 48px */
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--input-radius);
+  padding-inline: var(--space-3);
+  color: var(--text);
+  font-size: var(--text-base);
+  font-family: var(--font-ui);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: border-color var(--duration-fast) var(--ease-out),
+              box-shadow var(--duration-fast) var(--ease-out);
+}
+
+.form-select-trigger:focus-visible {
+  border-color: var(--border-focus);
+  box-shadow: var(--focus-ring);
+}
+
+.form-select-trigger--placeholder .form-select-trigger__text {
+  color: var(--input-ph);
+}
+
+.form-select-trigger__chevron {
+  color: var(--text-muted);
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.form-select-trigger[aria-expanded="true"] .form-select-trigger__chevron {
+  transform: rotate(180deg);
+}
+
+.form-select-menu {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  max-block-size: 16rem;
+  overflow-y: auto;
+  padding-block: var(--space-1);
+}
+
+.form-select-option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: var(--tap-min); /* 48px */
+  padding-inline: var(--space-3);
+  font-size: var(--text-base);
+  color: var(--text);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+@media (hover: hover) {
+  .form-select-option:hover {
+    background-color: var(--surface-hover);
+  }
+}
+
+.form-select-option--selected {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
+  font-weight: var(--weight-semibold);
+}
+
+.form-select-option--focused {
+  background-color: var(--surface-2);
+}
+
+.form-select-option__text {
+  flex: 1 1 0%;
+}
+
+.form-select-option__check {
+  color: var(--primary);
+}

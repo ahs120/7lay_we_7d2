@@ -1,0 +1,21 @@
+/* pages/not-found/not-found.css
+ * 404 page styling.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.page-not-found {
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  min-block-size: 20rem;
+}
+
+.not-found-box {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  max-inline-size: 32rem;
+  inline-size: 100%;
+}

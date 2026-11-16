@@ -17,6 +17,10 @@
     "db:seed": "node scripts/run-electron-node.mjs scripts/db-seed.mjs",
     "db:migrate": "node scripts/run-electron-node.mjs scripts/db-migrate.mjs",
     "test:db": "node scripts/run-electron-node.mjs scripts/run-db-tests.mjs",
+    "assets:ui": "node scripts/copy-ui-assets.mjs",
+    "test:ui": "node --test \"tests/renderer/*.test.mjs\"",
+    "audit:ui": "node scripts/audit-renderer.mjs",
+    "check:ui": "npm run audit:ui && npm run test:ui",
     "predist": "npm run icon && npm run check:native",
     "dist": "electron-builder --win nsis --x64",
     "postinstall": "node scripts/ensure-native.mjs"

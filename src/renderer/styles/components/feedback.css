@@ -1,0 +1,106 @@
+/* styles/components/feedback.css
+ * Busy overlay, Spinner, Skeleton, Empty State.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+/* ── Busy overlay ────────────────────────────────────────────────────── */
+.busy-overlay {
+  position: fixed;
+  inset: 0; /* allow-physical */
+  background-color: var(--overlay-bg);
+  backdrop-filter: blur(1px);
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.busy-overlay--fading {
+  opacity: 0;
+}
+
+.busy-overlay__card {
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  min-inline-size: 14rem;
+}
+
+.busy-overlay__spinner {
+  color: var(--primary);
+}
+
+.busy-overlay__text {
+  font-size: var(--text-base);
+  font-weight: var(--weight-semibold);
+  color: var(--text);
+}
+
+/* ── Skeleton shimmer ────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 0%,
+    var(--surface-3) 50%,
+    var(--surface-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite ease-in-out;
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton {
+    animation: none;
+    background: var(--surface-2);
+  }
+}
+
+/* ── Empty State ─────────────────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.empty-state__icon {
+  color: var(--text-muted);
+  opacity: 0.6;
+  margin-block-end: var(--space-2);
+}
+
+.empty-state__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+  margin: 0;
+}
+
+.empty-state__description {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  max-inline-size: 24rem;
+  line-height: var(--leading-relaxed);
+  margin: 0;
+}
+
+.empty-state__action {
+  margin-block-start: var(--space-3);
+}

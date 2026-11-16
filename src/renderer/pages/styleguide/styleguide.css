@@ -1,0 +1,176 @@
+/* pages/styleguide/styleguide.css
+ * Styleguide showcase layout and diagnostic panel.
+ * Colors via tokens.css variables only.
+ * Logical properties only.
+ */
+
+.page-styleguide {
+  gap: var(--space-8);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-w);
+  padding-block-end: var(--space-12);
+}
+
+.styleguide-header {
+  border-block-end: 2px solid var(--border);
+  padding-block-end: var(--space-4);
+}
+
+.styleguide-header__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  color: var(--primary);
+  margin-block-end: var(--space-1);
+}
+
+.styleguide-header__subtitle {
+  font-size: var(--text-base);
+  color: var(--text-muted);
+}
+
+.sg-section {
+  gap: var(--space-4);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+
+.sg-section__title {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text);
+  border-block-end: 1px solid var(--border-light);
+  padding-block-end: var(--space-3);
+  margin: 0;
+}
+
+/* ── 1. Colors ───────────────────────────────────────────────────────── */
+.sg-colors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: var(--space-4);
+}
+
+.sg-color-card {
+  padding: var(--space-3);
+  gap: var(--space-3);
+}
+
+.sg-color-swatch {
+  block-size: 4rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+}
+
+.sg-color-meta {
+  gap: var(--space-1);
+}
+
+.sg-color-name {
+  font-weight: var(--weight-bold);
+  color: var(--text);
+  font-size: var(--text-sm);
+}
+
+.sg-color-hex {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+.sg-color-desc {
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+
+/* ── 2. Typography ───────────────────────────────────────────────────── */
+.sg-typography-showcase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sg-typo-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  border-block-end: 1px solid var(--border-light);
+  padding-block-end: var(--space-3);
+}
+
+.sg-typo-label {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ── 3. Spacing ──────────────────────────────────────────────────────── */
+.sg-space-box {
+  border-radius: var(--radius-sm);
+}
+
+/* ── 4. Icons ────────────────────────────────────────────────────────── */
+.sg-icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr));
+  gap: var(--space-3);
+}
+
+.sg-icon-item {
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  background-color: var(--surface-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.sg-icon-preview {
+  color: var(--primary);
+}
+
+.sg-icon-name {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── 6. Inputs ───────────────────────────────────────────────────────── */
+.sg-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  gap: var(--space-4);
+}
+
+/* ── 14. Diagnostics Panel ───────────────────────────────────────────── */
+.sg-diagnostics-panel {
+  background-color: var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+
+.sg-diag-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  row-gap: var(--space-3);
+  column-gap: var(--space-6);
+  align-items: center;
+  font-size: var(--text-sm);
+}
+
+.sg-diag-grid dt {
+  color: var(--text);
+  font-weight: var(--weight-semibold);
+}
+
+.sg-diag-grid dd {
+  margin: 0;
+  display: flex;
+  align-items: center;
+}

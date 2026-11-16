@@ -1,0 +1,176 @@
+/* styles/splash.css — Splash screen styles
+ * No colors defined — uses tokens.css variables.
+ * No external URLs.
+ */
+
+/* ── Splash container ────────────────────────────────────────────────── */
+#splash {
+  position: fixed;
+  inset: 0; /* allow-physical: inset shorthand */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  background-color: var(--bg);
+  z-index: var(--z-splash);
+  transition: opacity var(--duration-normal) var(--ease-in);
+}
+
+#splash.splash--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#splash.splash--hidden {
+  display: none;
+}
+
+/* ── Islamic tile background pattern ─────────────────────────────────── */
+#splash::before {
+  content: '';
+  position: absolute;
+  inset: 0; /* allow-physical */
+  background-image: url('/assets/patterns/islamic-tile.svg');
+  background-repeat: repeat;
+  background-size: 120px 120px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* ── Logo area ───────────────────────────────────────────────────────── */
+.splash__logo-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  animation: splash-pop var(--duration-slow) var(--ease-spring) both;
+}
+
+.splash__logo {
+  inline-size: 7rem;
+  block-size: 7rem;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+  object-fit: contain;
+  background-color: var(--surface);
+}
+
+/* Logo error fallback — monogram */
+.splash__logo--monogram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  background-color: var(--surface);
+  inline-size: 7rem;
+  block-size: 7rem;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-xl);
+}
+
+/* ── App name ────────────────────────────────────────────────────────── */
+.splash__title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  color: var(--primary);
+  text-align: center;
+  letter-spacing: 0.01em;
+  text-shadow: 0 1px 2px color-mix(in srgb, var(--text) 10%, transparent 90%);
+}
+
+.splash__subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ── Progress bar ────────────────────────────────────────────────────── */
+.splash__progress-wrap {
+  position: relative;
+  z-index: 1;
+  inline-size: min(20rem, 80vw);
+  block-size: 4px;
+  background-color: var(--surface-2);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.splash__progress-bar {
+  block-size: 100%;
+  background-color: var(--primary);
+  border-radius: var(--radius-full);
+  transition: inline-size var(--duration-normal) var(--ease-out);
+  inline-size: 0%;
+}
+
+/* ── Loading message ─────────────────────────────────────────────────── */
+.splash__message {
+  position: relative;
+  z-index: 1;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-align: center;
+  min-block-size: 1.5em;
+}
+
+/* ── Error state ─────────────────────────────────────────────────────── */
+.splash--error .splash__logo-wrap {
+  animation: none;
+}
+
+.splash__error-box {
+  position: relative;
+  z-index: 1;
+  background-color: var(--danger-light);
+  border: 1px solid var(--danger);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-6);
+  max-inline-size: min(32rem, 90vw);
+  text-align: center;
+  display: none;
+}
+
+.splash--error .splash__error-box {
+  display: block;
+}
+
+.splash__error-title {
+  font-weight: var(--weight-bold);
+  color: var(--danger);
+  margin-block-end: var(--space-2);
+}
+
+.splash__error-msg {
+  font-size: var(--text-sm);
+  color: var(--text);
+}
+
+/* ── Version badge ───────────────────────────────────────────────────── */
+.splash__version {
+  position: absolute;
+  inset-block-end: var(--space-4); /* allow-physical: logical bottom */
+  inset-inline-end: var(--space-4); /* allow-physical: logical right */
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  opacity: 0.7;
+  direction: ltr; /* allow-physical */
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────────── */
+@keyframes splash-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
